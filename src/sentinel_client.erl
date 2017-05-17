@@ -25,6 +25,7 @@ start_link() ->
   io:format("start_link ~p~n",[Result]),
   eredis:start_link(Result).
 -spec start_link(server_args()) -> {ok, Pid::pid()} | {error, Reason::term()}|no_connection.
+
 start_link([First|Rest])->
   io:format("first : ~p~n",[First]),
   Result_ = eredis:start_link(First),
@@ -33,6 +34,14 @@ start_link([First|Rest])->
     {ok,C}->
       getIpAndPortOfMaster(C)
   end.
+
+put(Commd)->
+  {ok,C}=start_link(),
+  eredis:q(C,Commd).
+get(Commd)->
+  {ok,C}=start_link(),
+  eredis:q(C,Commd).
+
 -spec loop_monitor(Pid::pid()) -> {ok, Pid::pid()} | {error, Reason::term()}|no_connection.
 loop_monitor(Pid) ->
   _MonitorRef = erlang:monitor(process, Pid),
