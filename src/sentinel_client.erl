@@ -11,7 +11,7 @@
 -author("admin").
 %%-behaviour(gen_server).
 
--export([start_link/0,start/0]).
+-export([start_link/0,start/0,put/1,get/1]).
 -spec start() -> {ok, Pid::pid()} | {error, Reason::term()}|no_connection.
 start() ->
   Pid = spawn(fun() ->start_link() end),
